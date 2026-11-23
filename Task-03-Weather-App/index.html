@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eef2f3">
+  <meta name="description" content="Atmos is a refined global weather dashboard with live conditions and a five-day forecast.">
+  <title>Atmos — Weather, made clear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="theme-clear">
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+  <div class="page-shell" id="top">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Atmos home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-name">atmos<span>.</span></span>
+      </a>
+      <div class="header-note"><span class="status-dot"></span> WEATHER AROUND THE WORLD</div>
+      <a class="header-link" href="#outlook">5-DAY FORECAST <span aria-hidden="true">↘</span></a>
+    </header>
+
+    <main>
+      <section class="intro-section reveal">
+        <div class="intro-copy-block">
+          <p class="eyebrow">A CLEARER VIEW OF THE DAY</p>
+          <h1>Weather, <span>made clear.</span></h1>
+        </div>
+        <p class="intro-description">Explore current conditions and the five days ahead, wherever the day takes you.</p>
+      </section>
+
+      <section class="search-section reveal" aria-label="Search for a city">
+        <form id="search-form" class="search-form" autocomplete="off">
+          <label class="sr-only" for="city-input">Search city, region or country</label>
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.2 4.2"></path></svg>
+          </span>
+          <input id="city-input" name="city" type="search" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="location-options" aria-expanded="false" placeholder="Search any city around the world..." minlength="2" required>
+          <button id="search-button" class="search-button" type="submit">
+            <span class="button-label">Search location</span>
+            <span class="button-spinner" aria-hidden="true"></span>
+            <span class="button-arrow" aria-hidden="true">↗</span>
+          </button>
+        </form>
+        <div class="search-meta">
+          <span id="search-feedback" class="search-feedback" role="status" aria-live="polite">Start with a city name, such as Tokyo or Karachi</span>
+          <span class="search-hint">PRESS ENTER TO SEARCH</span>
+        </div>
+        <div id="location-choices" class="location-choices" hidden>
+          <div class="choices-heading"><span id="choices-title">SUGGESTED LOCATIONS</span><span id="choices-note">CHOOSE A CITY</span></div>
+          <div id="location-options" class="location-options" role="listbox" aria-label="City suggestions"></div>
+        </div>
+      </section>
+
+      <section id="weather-panel" class="weather-panel" aria-live="polite" aria-busy="false">
+        <div class="loading-state" id="loading-state" hidden>
+          <span class="loader-ring" aria-hidden="true"></span>
+          <span>Loading local weather conditions...</span>
+        </div>
+
+        <div id="weather-content" class="weather-content">
+          <div class="weather-heading reveal">
+            <div class="location-lockup">
+              <p class="eyebrow">CURRENT CONDITIONS</p>
+              <h2 id="location-name">Karachi</h2>
+              <p id="location-region" class="location-region">Pakistan</p>
+            </div>
+            <div class="updated-lockup">
+              <span class="live-indicator"><span></span> WEATHER DATA</span>
+              <span id="local-time" class="local-time">--:-- LOCAL TIME</span>
+            </div>
+          </div>
+
+          <div class="weather-overview">
+            <section class="temperature-card reveal" aria-label="Current temperature and conditions">
+              <div class="temperature-topline">
+                <span class="card-kicker">RIGHT NOW</span>
+                <button id="unit-toggle" class="unit-toggle" type="button" aria-label="Switch temperature unit">°C <span>/</span> °F</button>
+              </div>
+              <div class="temperature-main">
+                <div class="temperature-copy">
+                  <div class="temperature-reading"><span id="current-temperature">--</span><sup id="temperature-unit">°C</sup></div>
+                  <div class="condition-block">
+                    <p id="current-condition">Loading conditions</p>
+                    <span id="feels-like">Feels like --°</span>
+                  </div>
+                </div>
+                <div id="current-weather-icon" class="weather-symbol" aria-hidden="true"></div>
+              </div>
+              <div class="temperature-footer">
+                <span id="daylight-label">DAYLIGHT</span>
+                <span class="sun-times" id="sunrise-sunset">Sunrise --:-- <i></i> Sunset --:--</span>
+              </div>
+            </section>
+
+            <div class="metrics-grid" aria-label="Weather measurements">
+              <article class="metric-card metric-humidity reveal">
+                <div class="metric-top"><span>HUMIDITY</span><span class="metric-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5S5.8 10.2 5.8 14.6a6.2 6.2 0 0 0 12.4 0C18.2 10.2 12 3.5 12 3.5Z"></path><path d="M9.5 15.5a2.6 2.6 0 0 0 2.6 2.6"></path></svg></span></div>
+                <div class="metric-value"><strong id="humidity-value">--</strong><span>%</span></div>
+                <p>Relative humidity</p>
+                <div class="metric-track"><span id="humidity-track"></span></div>
+              </article>
+
+              <article class="metric-card metric-wind reveal">
+                <div class="metric-top"><span>WIND SPEED</span><span class="metric-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8h12.5a2.5 2.5 0 1 0-2.4-3.2M3 12h16a2 2 0 1 1-1.9 2.6M3 16h8.5a2.2 2.2 0 1 1-2.1 2.8"></path></svg></span></div>
+                <div class="metric-value"><strong id="wind-value">--</strong><span>km/h</span></div>
+                <p id="wind-direction">Wind movement</p>
+                <div class="wind-dial"><span id="wind-needle"></span></div>
+              </article>
+
+              <article class="metric-card metric-pressure reveal">
+                <div class="metric-top"><span>PRESSURE</span><span class="metric-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.2 17.8a8.3 8.3 0 1 1 15.6 0"></path><path d="m12 12 4-4M6.5 16.3h.1M17.4 16.3h.1M12 4.8v.1M5 20h14"></path></svg></span></div>
+                <div class="metric-value"><strong id="pressure-value">--</strong><span>hPa</span></div>
+                <p>Sea-level pressure</p>
+                <div class="pressure-caption"><span>LOW</span><span>NORMAL</span><span>HIGH</span></div>
+              </article>
+
+              <article class="metric-card metric-precipitation reveal">
+                <div class="metric-top"><span>PRECIPITATION</span><span class="metric-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 16.5a4.5 4.5 0 0 1-.4-9A5.7 5.7 0 0 1 17.5 9a3.8 3.8 0 0 1-.1 7.5H7Z"></path><path d="m9 19-1 2m6-2-1 2m6-2-1 2"></path></svg></span></div>
+                <div class="metric-value"><strong id="precipitation-value">--</strong><span>mm</span></div>
+                <p id="precipitation-detail">Current rainfall · today's rain chance --%</p>
+                <div class="precipitation-note">LATEST READING</div>
+              </article>
+            </div>
+          </div>
+
+          <section class="outlook-section" id="outlook">
+            <div class="section-heading reveal">
+              <div>
+                <p class="eyebrow">PLAN AHEAD</p>
+                <h2>Five-day forecast</h2>
+              </div>
+              <p class="section-note">The next five days · daily highs and lows<br>for your selected location.</p>
+            </div>
+            <div id="forecast-list" class="forecast-list">
+              <article class="forecast-card"><span class="forecast-day">TODAY</span><div class="forecast-icon"></div><span class="forecast-condition">—</span><div class="forecast-temps"><strong>--°</strong><span>--°</span></div></article>
+              <article class="forecast-card"><span class="forecast-day">TOMORROW</span><div class="forecast-icon"></div><span class="forecast-condition">—</span><div class="forecast-temps"><strong>--°</strong><span>--°</span></div></article>
+              <article class="forecast-card"><span class="forecast-day">DAY 03</span><div class="forecast-icon"></div><span class="forecast-condition">—</span><div class="forecast-temps"><strong>--°</strong><span>--°</span></div></article>
+              <article class="forecast-card"><span class="forecast-day">DAY 04</span><div class="forecast-icon"></div><span class="forecast-condition">—</span><div class="forecast-temps"><strong>--°</strong><span>--°</span></div></article>
+              <article class="forecast-card"><span class="forecast-day">DAY 05</span><div class="forecast-icon"></div><span class="forecast-condition">—</span><div class="forecast-temps"><strong>--°</strong><span>--°</span></div></article>
+            </div>
+            <p class="forecast-footnote">TEMPERATURE <span>·</span> DAILY HIGH / LOW <span>·</span> LOCAL DATES</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="closing-note reveal">
+        <div class="closing-index">ATMOS / WEATHER</div>
+        <p>Step outside <span>with a little more certainty.</span></p>
+        <a href="#top" class="back-top">BACK TO TOP <span aria-hidden="true">↑</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>ATMOS WEATHER</span>
+      <span>WEATHER DATA BY <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">OPEN-METEO</a></span>
+      <span>MADE FOR EVERYDAY FORECASTING</span>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
