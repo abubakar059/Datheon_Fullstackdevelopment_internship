@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111b39"/><stop offset="1" stop-color="#030813"/></linearGradient>
+ <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#343b79"/><stop offset="1" stop-color="#ff7400"/></linearGradient>
+ <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9a16"/><stop offset="1" stop-color="#ff5b00"/></linearGradient>
+</defs>
+<rect width="1200" height="400" rx="28" fill="url(#bg)" stroke="url(#edge)" stroke-width="3"/>
+<path d="M95 302V95l124 114L343 95v207h-58V184l-66 61-66-61v118z" fill="#f5f7fb"/>
+<path d="M219 209 343 95v57L219 265l-37-34z" fill="url(#orange)"/>
+<path d="M410 92v216" stroke="#ff7900" stroke-width="3"/>
+<text x="465" y="174" fill="#f5f7fb" font-family="Arial, Helvetica, sans-serif" font-size="50" letter-spacing="15">MUHAMMAD</text>
+<text x="465" y="238" fill="#f5f7fb" font-family="Arial, Helvetica, sans-serif" font-size="50" letter-spacing="15">ABUBAKAR</text>
+<text x="468" y="294" fill="#ff7900" font-family="Arial, Helvetica, sans-serif" font-size="25" letter-spacing="8">FULL STACK DEVELOPER</text>
+</svg>
