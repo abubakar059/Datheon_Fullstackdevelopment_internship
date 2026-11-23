@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f3f2ec" />
+  <meta name="description" content="A simple, focused task manager that keeps your tasks organized." />
+  <title>Daymark — A clearer view of your day</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Daymark home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>daymark</span>
+      </a>
+      <div class="topbar-right">
+        <span class="local-label"><span class="live-dot"></span> Saved on this device</span>
+        <div class="avatar" aria-label="Your workspace">Y</div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="intro-row">
+        <div>
+          <p class="eyebrow" id="today-label">YOUR WORKSPACE</p>
+          <h1>A clearer view of <span>your day.</span></h1>
+          <p class="intro-copy">Keep the important things moving, one task at a time.</p>
+        </div>
+        <div class="focus-note" aria-label="A reminder to stay focused">
+          <span class="focus-spark" aria-hidden="true">✳</span>
+          <span><strong>Keep it simple.</strong><small>Make steady progress.</small></span>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Task overview">
+        <article class="stat-card stat-total">
+          <div class="stat-icon" aria-hidden="true">▤</div>
+          <div><p>Total tasks</p><strong id="total-count">0</strong></div>
+          <span class="stat-caption">In your list</span>
+        </article>
+        <article class="stat-card stat-active">
+          <div class="stat-icon" aria-hidden="true">◷</div>
+          <div><p>In progress</p><strong id="active-count">0</strong></div>
+          <span class="stat-caption">Still to do</span>
+        </article>
+        <article class="stat-card stat-completed">
+          <div class="stat-icon" aria-hidden="true">✓</div>
+          <div><p>Completed</p><strong id="completed-count">0</strong></div>
+          <span class="stat-caption">Nicely done</span>
+        </article>
+      </section>
+
+      <section class="workspace-card" aria-label="Task manager">
+        <div class="workspace-heading">
+          <div>
+            <p class="eyebrow">YOUR LIST</p>
+            <h2>Tasks <span class="task-total-pill" id="heading-count">0</span></h2>
+          </div>
+          <span class="drag-hint"><span aria-hidden="true">⠿</span> Drag to reorder</span>
+        </div>
+
+        <form class="task-form" id="task-form" autocomplete="off">
+          <div class="task-input-wrap">
+            <span class="input-plus" aria-hidden="true" id="composer-icon">＋</span>
+            <input id="task-title" name="title" type="text" maxlength="120" placeholder="Add a task…" aria-label="Task title" required />
+          </div>
+          <div class="form-controls">
+            <label class="visually-hidden" for="task-category">Category</label>
+            <select id="task-category" name="category">
+              <option value="Work">◈ Work</option>
+              <option value="Personal">♡ Personal</option>
+              <option value="Study">▣ Study</option>
+              <option value="Other">✳ Other</option>
+            </select>
+            <label class="date-control" for="task-due-date" title="Due date">
+              <span aria-hidden="true">▦</span>
+              <input id="task-due-date" name="dueDate" type="date" aria-label="Due date" />
+            </label>
+            <button class="add-button" id="submit-task" type="submit"><span id="submit-label">Add task</span><span aria-hidden="true">↗</span></button>
+            <button class="cancel-edit" id="cancel-edit" type="button" hidden>Cancel</button>
+          </div>
+        </form>
+        <p class="form-hint" id="form-hint">Press <kbd>Enter</kbd> to quickly add a task.</p>
+
+        <div class="list-toolbar">
+          <nav class="filter-tabs" aria-label="Filter tasks" role="tablist">
+            <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All <span id="all-tab-count">0</span></button>
+            <button class="filter-tab" data-filter="active" role="tab" aria-selected="false">Active <span id="active-tab-count">0</span></button>
+            <button class="filter-tab" data-filter="completed" role="tab" aria-selected="false">Completed <span id="completed-tab-count">0</span></button>
+          </nav>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="search-input" type="search" placeholder="Search tasks" aria-label="Search tasks" />
+            <kbd>/</kbd>
+          </label>
+        </div>
+
+        <div class="task-list" id="task-list" aria-live="polite" aria-relevant="additions removals text"></div>
+        <div class="list-footer">
+          <span id="list-summary">Your next small win is waiting.</span>
+          <button id="clear-completed" class="clear-button" type="button" hidden>Clear completed</button>
+        </div>
+      </section>
+      <footer class="page-footer"><span>DAYMARK</span><span>A little structure for the things that matter.</span></footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><div class="noscript-message">Daymark needs JavaScript enabled to manage and save your tasks.</div></noscript>
+</body>
+</html>
